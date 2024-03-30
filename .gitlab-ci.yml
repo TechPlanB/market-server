@@ -1,0 +1,79 @@
+build-image:
+  stage: build
+  only:
+    refs:
+      - release*
+      - develop
+    changes:
+      - src/**/*
+  script:
+    - export VERSION=dev
+    - make build-image
+    - make push-image
+    - make clean-image
+  tags:
+    - bj-shell
+
+deploy-dev:
+  stage: deploy
+  only:
+    refs:
+      - release*
+      - develop
+    changes:
+      - src/**/*
+  dependencies:
+    - build-image
+  before_script:
+    - echo "$SSH_PRIVATE_KEY" > /tmp/id_rsa
+    - chmod 600 /tmp/id_rsa
+    - git config --global user.email "gitlab@gitlab.com"
+    - git config --global user.name "GitLab CI/CD"
+  script:
+    - GIT_SSH_COMMAND='ssh -i /tmp/id_rsa' git clone --single-branch --branch master ${GIT_SSH_REPO}
+    - cd devops && sed -i "s/gitTag:.*/gitTag:\ '$CI_COMMIT_SHORT_SHA'/g" market-server/dev-values.yaml
+    - cat market-server/dev-values.yaml
+    - git commit -am '[skip ci] DEV image update'
+    - GIT_SSH_COMMAND='ssh -i /tmp/id_rsa' git push origin master
+    - rm -rf /tmp/id_rsa
+  tags:
+    - bj-shell
+
+build-image-with-tag:
+  stage: build
+  only:
+    refs:
+      - tags
+    changes:
+      - src/**/*
+  script:
+    - export VERSION=${CI_COMMIT_TAG}
+    - make build-image
+    - make push-image
+    - make clean-image
+  tags:
+    - bj-shell
+
+deploy-prod:
+  stage: deploy
+  only:
+    refs:
+      - tags
+    changes:
+      - src/**/*
+  dependencies:
+    - build-image-with-tag
+  before_script:
+    - echo "$SSH_PRIVATE_KEY" > /tmp/id_rsa
+    - chmod 600 /tmp/id_rsa
+    - git config --global user.email "gitlab@gitlab.com"
+    - git config --global user.name "GitLab CI/CD"
+  script:
+    - GIT_SSH_COMMAND='ssh -i /tmp/id_rsa' git clone --single-branch --branch master ${GIT_SSH_REPO}
+    - cd devops && sed -i "s/tag:.*/tag:\ '$CI_COMMIT_TAG'/g" market-server/prod-values.yaml && sed -i "s/gitTag:.*/gitTag:\ '$CI_COMMIT_SHORT_SHA'/g" market-server/prod-values.yaml
+    - cat market-server/dev-values.yaml
+    - git commit -am '[skip ci] prod image update'
+    - GIT_SSH_COMMAND='ssh -i /tmp/id_rsa' git push origin master
+    - rm -rf /tmp/id_rsa
+  tags:
+    - bj-shell

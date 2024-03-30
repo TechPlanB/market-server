@@ -1,0 +1,26 @@
+Name: market-api
+Host: 0.0.0.0
+Port: 8888
+Timeout: 10000
+#DataSource: root:cGFzc3cwcmQK@tcp(47.102.154.244:3306)/nft_market?charset=utf8&parseTime=true
+MarketDataSource: admin:ijYESEpEpTx41UShetD9zjFizzUMwQsyhD7nRil@tcp(nftm-dev.cqqgcco1q2hb.us-east-2.rds.amazonaws.com:13206)/nft_listen?charset=utf8&parseTime=true
+GameDataSource: admin:ijYESEpEpTx41UShetD9zjFizzUMwQsyhD7nRil@tcp(nftm-dev.cqqgcco1q2hb.us-east-2.rds.amazonaws.com:13206)/usm?charset=utf8&parseTime=true
+CacheRedis:
+  - Host: 47.102.154.244:6379
+    Pass: cGFzc3cwcmRAcmVkaXMK
+    Type: node
+#Prometheus:
+#  Host: 127.0.0.1
+#  Port: 9091
+#  Path: /metrics
+Minio:
+  BucketName: nftm
+  AccessKey: uDfG3wgPnvkNofkWohgR
+  AccessSecret: 9VV7q2gLpR2b8xlNjLEDSp5qerRsPP8hYw52e3ZA
+  Url: oss.yuehaitao.com
+  UseSSL: true
+  OutUrl: https://oss.yuehaitao.com
+#DataSource: ${DB_URL}
+Chain:
+  NetworkUrl: https://bsc.getblock.io/testnet/?api_key=58f594f0-cc9e-4db2-a87a-009ec7790563
+  GetNFTTokenIdsContractAddress: 0xB7100B21340c177BfD5c1AA710c1B686365E5BA4

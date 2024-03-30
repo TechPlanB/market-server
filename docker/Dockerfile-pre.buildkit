@@ -1,0 +1,10 @@
+# syntax = docker/dockerfile:experimental
+FROM golang:1.16
+
+COPY . /app
+WORKDIR /app
+
+RUN go env -w GO111MODULE=on && go env -w GOPROXY=https://mirrors.aliyun.com/goproxy/,direct
+RUN --mount=type=cache,id=market-server,target=/go/pkg/mod \
+    go get github.com/a8m/envsubst/cmd/envsubst@v1.2.0 && \
+    cd src && CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o /app/market-server

@@ -1,0 +1,13 @@
+# syntax = docker/dockerfile:experimental
+FROM alpine:latest
+
+WORKDIR /app
+RUN --mount=type=bind,from=nftm/market-server-pre,source=/app,target=/tmp cp /tmp/market-server /app/market-server
+RUN --mount=type=bind,from=nftm/market-server-pre,source=/go/bin,target=/tmp/bin cp /tmp/bin/envsubst /usr/local/bin/
+COPY ./src/etc /app/etc
+COPY ./docker/entrypoint.sh /app
+RUN chmod +x ./entrypoint.sh
+
+ENV DB_URL ""
+
+CMD ["./entrypoint.sh"]

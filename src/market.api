@@ -1,0 +1,235 @@
+type (
+	NFTDropsReq {
+		PageNo   int    `form:"pageNo,optional,default=1"`
+		PageSize int    `form:"pageSize,optional,default=10"`
+		Category int    `form:"category,optional"`
+		Name     string `form:"name,optional"`
+		SortBy   string `form:"sortBy,optional,options=created_at|price,default=created_at"`
+		Order    string `form:"order,optional,options=asc|desc,default=asc"`
+	}
+
+	NFTDropsBody {
+		ID        int64   `json:"id"`
+		Name      string  `json:"name"`
+		ImageUrl  string  `json:"image_url"`
+		Count     int64   `json:"count"`
+		Price     float64 `json:"price"`
+		StartTime int64   `json:"start_time"`
+		EndTime   int64   `json:"end_time"`
+		Status    string  `json:"status"`
+	}
+
+	NFTDropsResponse {
+		Total int64          `json:"total"`
+		Code  int            `json:"code"`
+		Msg   string         `json:"msg"`
+		List  []NFTDropsBody `json:"list"`
+	}
+
+	NFTDropsInfoReq {
+		ID int64 `path:"id"`
+	}
+
+	NFTDropsInfoBody {
+		ID             int64   `json:"id"`
+		Name           string  `json:"name"`
+		Description    string  `json:"description"`
+		CreatedAt      string  `json:"created_at"`
+		CategoryName   string  `json:"category_name"`
+		CollectionName string  `json:"collection_name"`
+		ImageUrl       string  `json:"image_url"`
+		Count          int64   `json:"count"`
+		Price          float64 `json:"price"`
+		BuyAddress     string  `json:"buy_address"`
+		IdInContract   int64   `json:"id_in_contract"`
+		NeedCheck      int64   `json:"need_check"`
+		ShowLeft       int64   `json:"show_left"`
+		StartTime      int64   `json:"start_time"`
+		EndTime        int64   `json:"end_time"`
+		Status         string  `json:"status"`
+	}
+
+	NFTDropsInfoResponse {
+		Data NFTDropsInfoBody `json:"data"`
+		Code int32            `json:"code"`
+		Msg  string           `json:"msg"`
+	}
+
+	NFTSalesReq {
+		PageNo    int    `form:"pageNo,optional,default=1"`
+		PageSize  int    `form:"pageSize,optional,default=10"`
+		SaleType  string `form:"saleType,optional,options=fixed_price|auction,default=fixed_price"`
+		TokenType int    `form:"tokenType,optional,default=1"`
+		SortBy    string `form:"sortBy,optional,options=created_at|price|single_price,default=created_at"`
+		Order     string `form:"order,optional,options=asc|desc,default=asc"`
+	}
+
+	NFTSalesBody {
+		ID           int64   `json:"id"`
+		Name         string  `json:"name"`
+		ImageUrl     string  `json:"image_url"`
+		Count        int64   `json:"count"`
+		FixedPrice   float64 `json:"fixed_price"`
+		HighestPrice float64 `json:"highest_price"`
+		StartTime    int64   `json:"start_time"`
+		EndTime      int64   `json:"end_time"`
+		Status       string  `json:"status"`
+		SaleType     string  `json:"saleType"`
+	}
+
+	NFTSalesResponse {
+		Total int64          `json:"total"`
+		Code  int            `json:"code"`
+		Msg   string         `json:"msg"`
+		List  []NFTSalesBody `json:"list"`
+	}
+
+	NFTSalesInfoReq {
+		ID int64 `path:"id"`
+	}
+
+	NFTSalesInfoBody {
+		ID              int64      `json:"id"`
+		Name            string     `json:"name"`
+		Description     string     `json:"description"`
+		CreatedAt       string     `json:"created_at"`
+		CategoryName    string     `json:"category_name"`
+		CollectionName  string     `json:"collection_name"`
+		ImageUrl        string     `json:"image_url"`
+		Count           int64      `json:"count"`
+		FixedPrice      float64    `json:"fixed_price"`
+		HighestPrice    float64    `json:"highest_price"`
+		SaleAddress     string     `json:"sale_address"`
+		SaleType        string     `json:"saleType"`
+		IdInContract    int64      `json:"id_in_contract"`
+		TokenId         int64      `json:"token_id"`
+		TokenStandard   string     `json:"token_standard"`
+		TokenType       int64      `json:"token_type"`
+		Owner           string     `json:"owner"`
+		ContractAddress string     `json:"contract_address"`
+		BlockChain      string     `json:"block_chain"`
+		ProtocolFee     float64    `json:"protocol_fee"`
+		NeedCheck       int64      `json:"need_check"`
+		ShowLeft        int64      `json:"show_left"`
+		StartTime       int64      `json:"start_time"`
+		EndTime         int64      `json:"end_time"`
+		Status          string     `json:"status"`
+		Properties      []Property `json:"properties"`
+	}
+
+	Property {
+		Key   string `json:"key"`
+		Value string `json:"value"`
+	}
+
+	NFTSalesInfoResponse {
+		Data NFTSalesInfoBody `json:"data"`
+		Code int32            `json:"code"`
+		Msg  string           `json:"msg"`
+	}
+
+	ArtworkListReq {
+		PageNo   int    `form:"pageNo,optional,default=1"`
+		PageSize int    `form:"pageSize,optional,default=10"`
+		Status   string `form:"status,options=on_sale|not_on_sale,default=on_sale"`
+		Category int64  `form:"category,optional"`
+	}
+
+	ArtworkListBody {
+		ID           int64   `json:"id"`
+		Name         string  `json:"name"`
+		Count        int64   `json:"count"`
+		FixedPrice   float64 `json:"fixed_price"`
+		HighestPrice float64 `json:"highest_price"`
+		TokenID      int64   `json:"token_id"`
+		ImageUrl     string  `json:"image_url"`
+	}
+
+	ArtworkListResponse {
+		Total	int64             `json:"total"`
+		Code	int               `json:"code"`
+		Msg   string            `json:"msg"`
+		List  []ArtworkListBody `json:"list"`
+	}
+
+	ArtworkInfoReq {
+		ID int64 `path:"id"`
+		IdInContract	string `form:"id_in_contract,optional"`
+	}
+
+	ArtworkInfoBody {
+		ID              int64      `json:"id"`
+		Name            string     `json:"name"`
+		Description     string     `json:"description"`
+		CreatedAt       string     `json:"created_at"`
+		CategoryName    string     `json:"category_name"`
+		CollectionName  string     `json:"collection_name"`
+		Count           int64      `json:"count"`
+		TokenId         int64      `json:"token_id"`
+		TokenStandard   string     `json:"token_standard"`
+		TokenType       int64      `json:"token_type"`
+		Owner           string     `json:"owner"`
+		ContractAddress string     `json:"contract_address"`
+		BlockChain      string     `json:"block_chain"`
+		ProtocolFee     float64    `json:"protocol_fee"`
+		Properties      []Property `json:"properties"`
+	}
+
+	ArtworkInfoResponse {
+		Data ArtworkInfoBody `json:"data"`
+		Code int32           `json:"code"`
+		Msg  string          `json:"msg"`
+	}
+
+	CategoryListBody {
+		Code string `json:"code"`
+		Name string `json:"name"`
+	}
+
+	CategoryListResponse {
+		Code int                `json:"code"`
+		Msg  string             `json:"msg"`
+		List []CategoryListBody `json:"list"`
+	}
+
+	SaleContractReq {
+		Code string `json:"code"`
+	}
+
+	SaleContractInfoBody {
+		Code            string `json:"code"`
+		ContractAddress string `json:"contract_address"`
+	}
+
+	SaleContractInfoResponse {
+		Code int                  `json:"code"`
+		Msg  string               `json:"msg"`
+		Data SaleContractInfoBody `json:"data"`
+	}
+)
+
+service market-api {
+	@handler NFTDrops
+	get /drops (NFTDropsReq) returns (NFTDropsResponse)
+	
+	@handler getNFTDropsInfo
+	get /drops/:id (NFTDropsInfoReq) returns (NFTDropsInfoResponse)
+	
+	@handler NFTSalesList
+	get /nft-sales (NFTSalesReq) returns (NFTSalesResponse)
+	
+	@handler getNFTSalesInfo
+	get /nft-sales/:id (NFTSalesInfoReq) returns (NFTSalesInfoResponse)
+	
+	@handler ArtworkList
+	get /artworks (ArtworkListReq) returns (ArtworkListResponse)
+	
+	@handler getArtworkInfo
+	get /artworks/:id (ArtworkInfoReq) returns (ArtworkInfoResponse)
+	
+	@handler getCategories
+	get /categories returns (CategoryListResponse)
+	
+	@handler getSaleContract
+	get /sale-addresses/:code (SaleContractReq) returns (SaleContractInfoResponse)
+}

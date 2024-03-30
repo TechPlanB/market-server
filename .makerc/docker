@@ -1,0 +1,1 @@
+export SERVER_IMAGE?=harbor.zhigui.com/nftm/market-server:${VERSION}

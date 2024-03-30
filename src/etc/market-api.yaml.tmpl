@@ -1,0 +1,20 @@
+Name: market-api
+Host: 0.0.0.0
+Port: 8888
+Timeout: 10000
+MarketDataSource: ${MARKET_DB_URL:=root:cGFzc3cwcmQK@tcp(47.102.154.244:3306)/nft_listen?charset=utf8&parseTime=true}
+GameDataSource: ${GAME_DB_URL:=root:cGFzc3cwcmQK@tcp(47.102.154.244:3306)/usm?charset=utf8&parseTime=true}
+CacheRedis:
+  - Host: ${REDIS_HOST}:${REDIS_PORT}
+    Pass: ${REDIS_PASS}
+    Type: node
+Minio:
+  BucketName: ${MINIO_BUCKETNAME:=nftm}
+  AccessKey: ${MINIO_ACCESS_KEY:=uDfG3wgPnvkNofkWohgR}
+  AccessSecret: ${MINIO_ACCESS_SECRET:=9VV7q2gLpR2b8xlNjLEDSp5qerRsPP8hYw52e3ZA}
+  Url: ${MINIO_ENDPOINT:=oss.yuehaitao.com}
+  UseSSL: ${MINIO_USE_SSL:=true}
+  OutUrl: ${MINIO_OUT_URL:=https://oss.yuehaitao.com}
+Chain:
+  NetworkUrl: ${CHAIN_NETWORK_URL:=https://data-seed-prebsc-2-s3.binance.org:8545/}
+  GetNFTTokenIdsContractAddress: ${GET_NFTTOKENIDS_CONTRACTADDRESS:=0xB7100B21340c177BfD5c1AA710c1B686365E5BA4}
